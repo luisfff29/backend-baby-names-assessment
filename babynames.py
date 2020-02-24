@@ -47,6 +47,10 @@ def extract_names(filename):
     ['2006', 'Aaliyah 91', Aaron 57', 'Abagail 895', ' ...]
     """
     names = []
+    with open(filename, "r") as f:
+        pattern_year = re.compile(r'Popularity\sin\s(\d{4})')
+        year = re.search(pattern_year, f.read())
+    print(year.group(1))
     # +++your code here+++
     return names
 
@@ -86,5 +90,6 @@ def main(args):
     # +++your code here+++
 
 
-if __name__ == '__main__':
-    main(sys.argv[1:])
+extract_names('baby1990.html')
+# if __name__ == '__main__':
+#     main(sys.argv[1:])
