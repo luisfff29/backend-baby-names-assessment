@@ -9,6 +9,7 @@
 
 # Google's Python Class
 # http://code.google.com/edu/languages/google-python-class/
+__author__ = "luisfff29"
 
 import sys
 import re
@@ -52,7 +53,8 @@ def extract_names(filename):
 
 def create_parser():
     """Create a cmd line parser object with 2 argument definitions"""
-    parser = argparse.ArgumentParser(description="Extracts and alphabetizes baby names from html.")
+    parser = argparse.ArgumentParser(
+        description="Extracts and alphabetizes baby names from html.")
     parser.add_argument(
         '--summaryfile', help='creates a summary file', action='store_true')
     # The nargs option instructs the parser to expect 1 or more filenames.
