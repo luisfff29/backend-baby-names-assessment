@@ -67,11 +67,9 @@ def extract_names(filename):
         else:
             d[tup[1]] = tup[0]
             d[tup[2]] = tup[0]
-    print(d)
     for name in d:
         names.append(name + " " + d[name])
     names.sort()
-    print(names)
     return names
 
 
@@ -92,6 +90,7 @@ def main(args):
     parser = create_parser()
     # Run the parser to collect command-line arguments into a NAMESPACE called 'ns'
     ns = parser.parse_args(args)
+    print(ns)
 
     if not ns:
         parser.print_usage()
@@ -106,10 +105,12 @@ def main(args):
     # Format the resulting list a vertical list (separated by newline \n)
     # Use the create_summary flag to decide whether to print the list,
     # or to write the list to a summary file e.g. `baby1990.html.summary`
+    if not create_summary:
+        for name in extract_names(file_list[0]):
+            print(name)
 
     # +++your code here+++
 
 
-extract_names('baby1990.html')
-# if __name__ == '__main__':
-#     main(sys.argv[1:])
+if __name__ == '__main__':
+    main(sys.argv[1:])
