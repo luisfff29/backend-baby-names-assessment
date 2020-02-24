@@ -51,6 +51,10 @@ def extract_names(filename):
         pattern_year = re.compile(r'Popularity\sin\s(\d{4})')
         year = re.search(pattern_year, f.read())
     print(year.group(1))
+    with open(filename, "r") as f:
+        pattern = re.compile(r'<td>(\d+)<\/td><td>(\w+)<\/td><td>(\w+)<\/td>')
+        rank_names = re.findall(pattern, f.read())
+    print(rank_names)
     # +++your code here+++
     return names
 
