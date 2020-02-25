@@ -90,7 +90,6 @@ def main(args):
     parser = create_parser()
     # Run the parser to collect command-line arguments into a NAMESPACE called 'ns'
     ns = parser.parse_args(args)
-    print(ns)
 
     if not ns:
         parser.print_usage()
@@ -108,8 +107,11 @@ def main(args):
     if not create_summary:
         for name in extract_names(file_list[0]):
             print(name)
-
-    # +++your code here+++
+    else:
+        for file in file_list:
+            with open(file + ".summary", "w") as f:
+                text = '\n'.join(extract_names(file)) + '\n'
+                f.write(text)
 
 
 if __name__ == '__main__':
