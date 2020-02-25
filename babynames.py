@@ -9,6 +9,7 @@
 
 # Google's Python Class
 # http://code.google.com/edu/languages/google-python-class/
+__author__ = "luisfff29"
 
 import sys
 import re
@@ -46,13 +47,36 @@ def extract_names(filename):
     ['2006', 'Aaliyah 91', Aaron 57', 'Abagail 895', ' ...]
     """
     names = []
-    # +++your code here+++
+    with open(filename, "r") as f:
+        pattern_year = re.compile(r'Popularity\sin\s(\d{4})')
+        year = re.search(pattern_year, f.read())
+    names.append(year.group(1))
+    with open(filename, "r") as f:
+        pattern = re.compile(r'<td>(\d+)<\/td><td>(\w+)<\/td><td>(\w+)<\/td>')
+        rank_names = re.findall(pattern, f.read())
+    d = {}
+    for tup in rank_names:
+        if tup[1] in d and tup[2] in d:
+            continue
+        elif tup[1] in d:
+            d[tup[2]] = tup[0]
+            continue
+        elif tup[2] in d:
+            d[tup[1]] = tup[0]
+            continue
+        else:
+            d[tup[1]] = tup[0]
+            d[tup[2]] = tup[0]
+    for name in d:
+        names.append(name + " " + d[name])
+    names.sort()
     return names
 
 
 def create_parser():
     """Create a cmd line parser object with 2 argument definitions"""
-    parser = argparse.ArgumentParser(description="Extracts and alphabetizes baby names from html.")
+    parser = argparse.ArgumentParser(
+        description="Extracts and alphabetizes baby names from html.")
     parser.add_argument(
         '--summaryfile', help='creates a summary file', action='store_true')
     # The nargs option instructs the parser to expect 1 or more filenames.
@@ -80,8 +104,14 @@ def main(args):
     # Format the resulting list a vertical list (separated by newline \n)
     # Use the create_summary flag to decide whether to print the list,
     # or to write the list to a summary file e.g. `baby1990.html.summary`
-
-    # +++your code here+++
+    if not create_summary:
+        for name in extract_names(file_list[0]):
+            print(name)
+    else:
+        for file in file_list:
+            with open(file + ".summary", "w") as f:
+                text = '\n'.join(extract_names(file)) + '\n'
+                f.write(text)
 
 
 if __name__ == '__main__':
